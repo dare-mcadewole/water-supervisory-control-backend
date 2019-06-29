@@ -1,0 +1,22 @@
+{
+  "name": "carl",
+  "version": "1.0.0",
+  "description": "RESTful API for easl app",
+  "main": "server.js",
+  "scripts": {
+    "serve": "node launch",
+    "serve-hot": "nodemon launch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dare McAdewole <dare.dev.adewole@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "esm": "^3.2.25",
+    "eventemitter3": "^4.0.0",
+    "restify": "^8.3.3",
+    "restify-cors-middleware": "^1.1.1",
+    "socket.io": "^2.2.0",
+    "thread-sleep": "^2.2.0"
+  }
+}
