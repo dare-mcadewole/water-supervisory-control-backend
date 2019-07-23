@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "serve": "node launch",
+    "start": "node launch",
     "serve-hot": "nodemon launch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
