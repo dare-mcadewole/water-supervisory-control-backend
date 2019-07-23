@@ -32,6 +32,14 @@ export default class Router {
         // Initialize and setup WMSSocket
         WMSSocket.initialize(ServerInstance);
 
+        Server.get('/api', (req, reply, next) => {
+            reply.send({
+                name: 'Water Supervisory Control API',
+                version: '1.0.1'
+            });
+            return next();
+        });
+
         // ServerInstance.post('/api/terminal/:terminal_id', Authorize);
         // ServerInstance.post('/api/terminal/state/:terminal_id', Authorize);
         // ServerInstance.post('/api/tank/pump', Authorize);
