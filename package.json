@@ -1,7 +1,7 @@
 {
-  "name": "carl",
+  "name": "wms",
   "version": "1.0.0",
-  "description": "RESTful API for easl app",
+  "description": "RESTful API for Water Monitoring System",
   "main": "server.js",
   "scripts": {
     "serve": "node launch",
@@ -14,6 +14,7 @@
     "dotenv": "^8.0.0",
     "esm": "^3.2.25",
     "eventemitter3": "^4.0.0",
+    "nedb": "^1.8.0",
     "restify": "^8.3.3",
     "restify-cors-middleware": "^1.1.1",
     "socket.io": "^2.2.0",

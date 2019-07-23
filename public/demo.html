@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WMS Demo</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/buefy.min.css">
+</head>
+<body>
+    <div id="app">
+        <div class="wms-topbar has-background-primary">
+            <h1 class="subtitle has-text-white">Water Management System</h1>
+        </div>
+
+        <div class="vcenter">
+            <b-taglist attached>
+                <b-tag class="is-dark">Connected</b-tag>
+                <b-tag>
+                    {{ isConnected ? 'YES' : 'NO' }}
+                </b-tag>
+            </b-taglist>
+        </div>
+
+        <div class="wms-tanks columns is-vcentered" style="width:80%;margin:auto;">
+            <div
+            v-for="(tank, i) in tanks"
+            :key="`wms-tank-${i}`"
+            class="wms-tank column is-one-quarter">
+            
+                <b-tag rounded class="has-text-weight-bold">Tank {{ i+1 }}</b-tag>
+                <div class="wms-tank-sensor-1 has-background-primary has-text-white is-size-1 has-text-centered">
+                    {{ tank[0].value }}LPM
+                </div>
+
+                <div class="wms-leakage vcenter has-background-white-ter">
+                    <div>
+                        Leakage: {{ difference(tank[0].value, tank[1].value) > flowGap ? 'YES' : 'NO' }}
+                    </div>
+                    <div>
+                        <b-switch v-model="tank[0].isOn" disabled>Valve is {{ tank[0].isOn ? 'On': 'Off' }}</b-switch>
+                    </div>
+                </div>
+
+                <div class="wms-tank-sensor-2 has-background-primary has-text-white is-size-1 has-text-centered">
+                    {{ tank[1].value }}LPM
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="http://localhost:5555/socket.io/socket.io.js"></script>
+    <script src="./js/vendor/vue.js"></script>
+    <script src="./js/vendor/buefy.min.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+</html>

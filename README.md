@@ -1,7 +1,7 @@
-# CARL API
+# WMS API
 
-Backend API Framework for CARL Mobile Application
-| RESTify, Socket.io, Custom Console Logger, CORS
+Backend API Framework for Water Supervisory Control Web Application
+| RESTify, Socket.io, Custom Console Logger, CORS, NeDB
 
 ## Demo
 
@@ -17,24 +17,10 @@ Open the file `carl.html` under the `/public` directory in a browser
 
 ## Usage
 
-- Set the HTTP Authorization Header to `Bearer [TOKEN]`
-| Note: Token can be found under AUTH_KEY env variable in the `.env` file
+- Run the following in bash shell
 
-- Send Temperature and Heart Rate Values to the endpoint:
-`/api/carl?temperature=[TEMPERATURE]&heart_rate=[HEART_RATE]`
-
-- Create a Socket connection on the client-side like below:
-| Note: The TOKEN below can be found under the SOCKET_KEY in the '.env' file
-
-```javascript
-var socket = io('http://localhost:5555/carl?token=[TOKEN]');
-socket.on('connect', () => {
-    socket.on('carl-data', (data) => {
-        // Do some stuff with the data when received
-        // You can access 'temperature' using data.temperature
-        // You can access 'heartRate' using data.heartRate
-    });
-});
+```bash
+npm run serve
 ```
 
 ## Authors/Contributors

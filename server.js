@@ -10,8 +10,8 @@
  */
 import sleep from 'thread-sleep';
 // Import Environment Variables
-Logger.info('Loading server configurations ... ');
-sleep(1500);
+Logger.info('Loading WMS server configurations ... ');
+// sleep(500);
 require('dotenv').config();
 
 import Restify from 'restify';
@@ -21,22 +21,25 @@ import CORSMiddleware from 'restify-cors-middleware';
 var Server = Restify.createServer({
     name: process.env.SERVER_NAME
 });
-Logger.info('Server is booting up ... ');
-sleep(2000);
+Logger.info('WMS Server is booting up ... ');
+// sleep(700);
 
 Logger.info('Registering QueryParser plugin ... ');
 Server.use(Restify.plugins.queryParser());
-sleep(1000);
+Server.use(Restify.plugins.acceptParser(Server.acceptable));
+Server.use(Restify.plugins.fullResponse());
+Server.use(Restify.plugins.bodyParser());
+// sleep(500);
 
 Logger.info('Setting up CORS middleware');
 const cors = CORSMiddleware({
-    origins: [ '*' ],
-    allowHeaders: [ 'Authorization' ],
-    exposeHeaders: [ 'Authorization' ]
+    origins: ['*'],
+    allowHeaders: ['Authorization', 'Content-Type'],
+    exposeHeaders: ['Authorization', 'Content-Type']
 });
 Server.pre(cors.preflight);
 Server.use(cors.actual);
-sleep(1500);
+// sleep(500);
 
 // Initialize routes
 require('./src/Router').default.initRoutes(Server);
@@ -45,7 +48,7 @@ Server.listen(
     process.env.PORT,
     process.env.HOST,
     () => {
-        sleep(3500);
-        Logger.info(`Hello from CARL @ ${Server.url}`);
+        // sleep(500);
+        Logger.info(`Say 'Hello' to WMS Server @ ${Server.url}`);
     }
 );
