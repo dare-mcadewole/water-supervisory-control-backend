@@ -22,6 +22,14 @@ let Authorize = (req, res, next) => {
     return next();
 };
 
+var idValidation = (req, reply, next, param, includesArray) => {
+    var id = parseInt(req.params[param]);
+    if (!includesArray.includes(id)) {
+        return reply.send({ msg: 'INVALID_ID_PARAMETER' });
+    }
+    return next();
+};
+ 
 export default class Router {
 
     /**
@@ -41,7 +49,11 @@ export default class Router {
             return next();
         });
 
-        ServerInstance.get('/api/valve/:terminal_id', ValveController.getValveState);
+        ServerInstance.get(
+            '/api/valve/:terminal_id',
+            (req, reply, next) => idValidation(req, reply, next, 'terminal_id', [1, 2, 3, 4]),
+            ValveController.getValveState
+        );
 
         // ServerInstance.post('/api/terminal/:terminal_id', Authorize);
         // ServerInstance.post('/api/terminal/state/:terminal_id', Authorize);
@@ -51,19 +63,14 @@ export default class Router {
 
         ServerInstance.post(
             '/api/terminal/:terminal_id',
-            (req, reply, next) => {
-                var terminal_id = parseInt(req.params.terminal_id);
-                if (![1, 2, 3, 4].includes(terminal_id)) {
-                    return reply.send({ msg: 'INVALID_TERMINAL_ID' });
-                }
-                return next();
-            },
+            (req, reply, next) => idValidation(req, reply, next, 'terminal_id', [1, 2, 3, 4]),
             (req, reply, next) => TerminalController.updateTerminal(WMSSocket, req, reply, next)
         );
 
         // /api/terminal/state/:terminal_id
         ServerInstance.post(
             '/api/terminal/state/:terminal_id',
+            (req, reply, next) => idValidation(req, reply, next, 'terminal_id', [1, 2, 3, 4]),
             (req, reply, next) => TerminalController.updateTerminalState(WMSSocket, req, reply, next)
         );
 
@@ -91,6 +98,7 @@ export default class Router {
 
         ServerInstance.post(
             '/api/terminal/billing/:terminal_id',
+            (req, reply, next) => idValidation(req, reply, next, 'terminal_id', [1, 2, 3, 4]),
             (req, reply, next) => {
                 BillingController.updateBilling(WMSSocket, req, reply, next);
             }
