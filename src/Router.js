@@ -13,6 +13,7 @@ import Logger from './Logger';
 import TerminalController from './controllers/TerminalController';
 import TankController from './controllers/TankController';
 import BillingController from './controllers/BillingController';
+import ValveController from './controllers/ValveController';
 
 let Authorize = (req, res, next) => {
     if (req.header('Authorization') !== `Bearer ${process.env.AUTH_KEY}`) {
@@ -39,6 +40,8 @@ export default class Router {
             });
             return next();
         });
+
+        ServerInstance.get('/api/valve/:terminal_id', ValveController.getValveState);
 
         // ServerInstance.post('/api/terminal/:terminal_id', Authorize);
         // ServerInstance.post('/api/terminal/state/:terminal_id', Authorize);
