@@ -23,6 +23,8 @@ class Tank {
      * @param {*} tankLevel 
      */
     updateTankLevel (tankLevel) {
+        // Convert tank level to percentage
+        tankLevel = (5*tankLevel) / 6;
         tank.update({
             wmsid: '6srftydgyewu'
         }, { $set: { tankLevel } }, { upsert: true });
