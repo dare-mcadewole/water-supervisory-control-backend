@@ -39,6 +39,9 @@ export default class TankController {
      * @param {*} next 
      */
     static setWaterLevel (Socket, { body: { level } }, reply, next) {
+        var tankHeight = 100;
+        if (level > tankHeight) level = tankHeight;
+        level = parseInt(tankHeight - (5 * level / 6));
         Tank.updateTankLevel(level);
         Socket.emit(Events.WMS_TANK_WATER_LEVEL_UPDATED, { level });
         reply.send({ level });
