@@ -10,17 +10,22 @@ export default class BillingController {
      * @param {*} reply 
      * @param {*} next 
      */
-    static updateBilling (Socket, {
+    static async updateBilling (Socket, {
         params: { terminal_id },
         body: { units }
     }, reply, next) {
         var billData = {
             terminal: terminal_id,
             units
+        };
+        try {
+            await Billing.update(billData);
+            Socket.emit(Events.WMS_TERMINAL_BILLING_UPDATED, billData);
+            reply.send(billData);
+        } catch (e) {
+            reply.send(e);
+        } finally {
+            return next();
         }
-        Billing.update(billData);
-        Socket.emit(Events.WMS_TERMINAL_BILLING_UPDATED, billData);
-        reply.send(billData);
-        return next();
     }
 }

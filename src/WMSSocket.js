@@ -13,6 +13,8 @@ import EventEmitter from 'eventemitter3';
 import Logger from './Logger';
 import sleep from 'thread-sleep';
 import Events from './Events';
+import Store from './Store';
+import Billing from './models/Billing';
 
 const WMS_NAMESPACE = '/wms';
 
@@ -48,35 +50,71 @@ class WMSSocket extends EventEmitter {
         sleep(1000);
 
         IO.of(WMS_NAMESPACE).on('connection', (client) => {
+            if (!this._clients.includes(client)) {
+
+                client.on(Events.WMS_CURRENT_BILLS_REQ, () => {
+                    client.emit(Events.WMS_CURRENT_BILLS, Store.bills);
+                });
+
+                client.on(Events.WMS_TERMINALS_METERING_REQ, () => {
+                    client.emit(Events.WMS_TERMINALS_METERING, Store.meterings);
+                });
+
+                // client.on(Events.WMS_TERMINALS_METERING_UPDATE, ({ terminal, metering }) => {
+                //     Store.meterings[terminal - 1] = metering;
+                //     client.emit(Events.WMS_TERMINALS_METERING, Store.meterings);
+                // });
+
+                this.on(Events.WMS_TERMINAL_DATA_UPDATED, (data) => {
+                    // IO.of(WMS_NAMESPACE).emit(Events.WMS_TERMINAL_DATA, data);
+                    client.emit(Events.WMS_TERMINAL_DATA, data);
+                    if (data.sensor === 2) {
+                        var flowLitre = parseFloat((data.value / 60).toFixed(2));
+                        Store.meterings[data.terminal - 1] += flowLitre;
+                        client.emit(Events.WMS_TERMINALS_METERING, Store.meterings);
+                        // Update bill
+                        if (Store.bills[data.terminal - 1] > flowLitre) {
+                            Store.bills[data.terminal - 1] -= flowLitre;
+                            // Billing.update({
+                            //     terminal: data.terminal,
+                            //     units: Store.bills[data.terminal - 1]
+                            // });
+                            client.emit(Events.WMS_CURRENT_BILLS, Store.bills);
+                        } else {
+                            Store.bills[data.terminal - 1] = 0;
+                            client.emit(Events.WMS_CURRENT_BILLS, Store.bills);
+                        }
+                    }
+                    Logger.info(
+                        `[TERMINAL_DATA_UP] Terminal ${data.terminal}, sensor ${data.sensor} was updated with ${data.value}LPS`
+                    );
+                });
+    
+                this.on(Events.WMS_TERMINAL_STATE_UPDATED, (data) => {
+                    client.emit(Events.WMS_TERMINAL_STATE, data);
+                    Logger.info(`[TERMINAL_STATE_UP] Terminal ${data.terminal} is now ${data.state}`);
+                });
+    
+                this.on(Events.WMS_TANK_PUMP_STATE_UPDATED, (data) => {
+                    client.emit(Events.WMS_TANK_PUMP_STATE, data);
+                    Logger.info(`[TANK_PUMP_STATE] Pump is ${data.state}`);
+                });
+    
+                this.on(Events.WMS_TANK_WATER_LEVEL_UPDATED, (data) => {
+                    client.emit(Events.WMS_TANK_WATER_LEVEL, data);
+                    Logger.info(`[TANK_WATER_LEVEL] Water Level is ${data.level}`);
+                });
+    
+                this.on(Events.WMS_TERMINAL_BILLING_UPDATED, (data) => {
+                    client.emit(Events.WMS_TERMINAL_BILLING, data);
+                    Logger.info(`[TERMINAL_BILLING_UP] Terminal ${data.terminal} now has ${data.units} units`);
+                    Logger.info(`Bills: ${Store.bills}`);
+                });
+            }
+
             this._clients.push(client);
-            client.on('foo', console.log);
             client.emit(Events.WMS_TERMINALS, this._tanks);
             Logger.info(`${this._clients.length} connection(s) opened!`);
-
-            this.on(Events.WMS_TERMINAL_DATA_UPDATED, (data) => {
-                IO.of(WMS_NAMESPACE).emit(Events.WMS_TERMINAL_DATA, data);
-                Logger.info(`[TERMINAL_DATA_UP] Terminal ${data.terminal}, sensor ${data.sensor} was updated with ${data.value}LPS`);
-            });
-
-            this.on(Events.WMS_TERMINAL_STATE_UPDATED, (data) => {
-                IO.of(WMS_NAMESPACE).emit(Events.WMS_TERMINAL_STATE, data);
-                Logger.info(`[TERMINAL_STATE_UP] Terminal ${data.terminal} is now ${data.state}`);
-            });
-
-            this.on(Events.WMS_TANK_PUMP_STATE_UPDATED, (data) => {
-                IO.of(WMS_NAMESPACE).emit(Events.WMS_TANK_PUMP_STATE, data);
-                Logger.info(`[TANK_PUMP_STATE] Pump is ${data.state}`);
-            });
-
-            this.on(Events.WMS_TANK_WATER_LEVEL_UPDATED, (data) => {
-                IO.of(WMS_NAMESPACE).emit(Events.WMS_TANK_WATER_LEVEL, data);
-                Logger.info(`[TANK_WATER_LEVEL] Water Level is ${data.level}`);
-            });
-
-            this.on(Events.WMS_TERMINAL_BILLING_UPDATED, (data) => {
-                IO.of(WMS_NAMESPACE).emit(Events.WMS_TERMINAL_BILLING, data);
-                Logger.info(`[TERMINAL_BILLING_UP] Terminal ${data.terminal} now has ${data.units} units`);
-            });
 
             client.on('disconnect', () => {
                 this._clients.splice(this._clients.indexOf(client), 1);

@@ -10,11 +10,16 @@ var tank = new Datastore({
 
 class Tank {
     initialize () {
-        tank.insert({
-            wmsid: '6srftydgyewu',
-            tankLevel: 0,
-            pumpState: 0,
-            createdDate: new Date()
+        return new Promise((resolve, reject) => {
+            tank.insert({
+                wmsid: '6srftydgyewu',
+                tankLevel: 0,
+                pumpState: 0,
+                createdDate: new Date()
+            }, (err, doc) => {
+                if (err) reject(err);
+                resolve(doc);
+            });
         });
     }
 
@@ -24,9 +29,18 @@ class Tank {
      */
     updateTankLevel (tankLevel) {
         // Convert tank level to percentage
-        tank.update({
-            wmsid: '6srftydgyewu'
-        }, { $set: { tankLevel } }, { upsert: true });
+        return new Promise((resolve, reject) => {
+            tank.update(
+                {
+                    wmsid: '6srftydgyewu'
+                },
+                { $set: { tankLevel } }, { upsert: true },
+                (err, doc) => {
+                    if (err) reject(err);
+                    resolve(doc);
+                }
+            );
+        });
     }
 
     /**
@@ -34,9 +48,18 @@ class Tank {
      * @param {*} pumpState 
      */
     updatePumpState (pumpState) {
-        tank.update({
-            wmsid: '6srftydgyewu'
-        }, { $set: { pumpState } }, { upsert: true });
+        return new Promise((resolve, reject) => {
+            tank.update(
+                {
+                    wmsid: '6srftydgyewu'
+                }, { $set: { pumpState } },
+                { upsert: true },
+                (err, doc) => {
+                    if (err) reject(err);
+                    resolve(doc);
+                }
+            );
+        });
     }
 }
 

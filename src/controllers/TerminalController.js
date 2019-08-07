@@ -10,7 +10,7 @@ export default class TerminalController {
      * @param {*} reply 
      * @param {*} next 
      */
-    static updateTerminal (Socket, { params: { terminal_id }, body: {
+    static async updateTerminal (Socket, { params: { terminal_id }, body: {
         sensor, value
     }}, reply, next) {
         var terminalData = {
@@ -18,10 +18,15 @@ export default class TerminalController {
             sensor: parseInt(sensor),
             value: parseInt(value)
         };
-        Terminal.addData(terminalData);
-        Socket.emit(Events.WMS_TERMINAL_DATA_UPDATED, terminalData);
-        reply.send(terminalData);
-        return next();
+        try {
+            await Terminal.addData(terminalData);
+            Socket.emit(Events.WMS_TERMINAL_DATA_UPDATED, terminalData);
+            reply.send(terminalData);
+        } catch (ex) {
+            reply.send(ex);
+        } finally {
+            return next();
+        }
     }
 
     /**
@@ -29,16 +34,21 @@ export default class TerminalController {
      * @param {*} Socket 
      * @param {*} param1 
      */
-    static updateTerminalState (Socket, {params: { terminal_id }, body: {
+    static async updateTerminalState (Socket, {params: { terminal_id }, body: {
         state
     }}, reply, next) {
         var data = {
             terminal: terminal_id,
             state
         };
-        Terminal.setState(data);
-        Socket.emit(Events.WMS_TERMINAL_STATE_UPDATED, data);
-        reply.send(data);
-        return next();
+        try {
+            await Terminal.setState(data);
+            Socket.emit(Events.WMS_TERMINAL_STATE_UPDATED, data);
+            reply.send(data);
+        } catch (e) {
+            reply.send(e);
+        } finally {
+            return next();
+        }
     }
 }
