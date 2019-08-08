@@ -84,6 +84,12 @@ class WMSSocket extends EventEmitter {
                             Store.bills[data.terminal - 1] = 0;
                             client.emit(Events.WMS_CURRENT_BILLS, Store.bills);
                         }
+                        if (data.terminal === 1) {
+                            Store.terminalUsages[0].push(Store.meterings[data.terminal - 1]);
+                            var usages = Store.terminalUsages[0];
+                            usages.reverse();
+                            client.emit(Events.WMS_TERMINAL_USAGE, usages);
+                        }
                     }
                     Logger.info(
                         `[TERMINAL_DATA_UP] Terminal ${data.terminal}, sensor ${data.sensor} was updated with ${data.value}LPS`

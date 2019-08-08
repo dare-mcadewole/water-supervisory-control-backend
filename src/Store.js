@@ -10,5 +10,6 @@
  */
 export default {
     bills: [0, 0, 0, 0],
-    meterings: [0, 0, 0, 0]
+    meterings: [0, 0, 0, 0],
+    terminalUsages: [[], [], [], []]
 };
