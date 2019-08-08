@@ -44,7 +44,7 @@ export default class Router {
         ServerInstance.get('/api', (req, reply, next) => {
             reply.send({
                 name: 'Water Supervisory Control API',
-                version: '2.1.0'
+                version: '2.2.0'
             });
             return next();
         });
@@ -54,12 +54,6 @@ export default class Router {
             (req, reply, next) => idValidation(req, reply, next, 'terminal_id', [1, 2, 3, 4]),
             ValveController.getValveState
         );
-
-        // ServerInstance.post('/api/terminal/:terminal_id', Authorize);
-        // ServerInstance.post('/api/terminal/state/:terminal_id', Authorize);
-        // ServerInstance.post('/api/tank/pump', Authorize);
-        // ServerInstance.post('/api/tank/level', Authorize);
-        // ServerInstance.post('/api/terminal/billing/:terminal_id', Authorize);
 
         ServerInstance.post(
             '/api/terminal/:terminal_id',

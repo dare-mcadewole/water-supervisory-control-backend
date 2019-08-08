@@ -56,6 +56,13 @@ class WMSSocket extends EventEmitter {
                     client.emit(Events.WMS_CURRENT_BILLS, Store.bills);
                 });
 
+                client.on(Events.WMS_TERMINAL_RESET, () => {
+                    Logger.info('Resetting data ... ');
+                    Store.meterings = [0, 0, 0, 0];
+                    Store.bills = [0, 0, 0, 0];
+                    client.emit(Events.WMS_CURRENT_BILLS, Store.bills);
+                });
+
                 client.on(Events.WMS_TERMINALS_METERING_REQ, () => {
                     client.emit(Events.WMS_TERMINALS_METERING, Store.meterings);
                 });
@@ -69,27 +76,16 @@ class WMSSocket extends EventEmitter {
                     // IO.of(WMS_NAMESPACE).emit(Events.WMS_TERMINAL_DATA, data);
                     client.emit(Events.WMS_TERMINAL_DATA, data);
                     if (data.sensor === 2) {
-                        var flowLitre = parseFloat((data.value / 60).toFixed(2));
-                        Store.meterings[data.terminal - 1] += flowLitre;
-                        client.emit(Events.WMS_TERMINALS_METERING, Store.meterings);
+                        // var flowLitre = parseFloat((data.value / 60).toFixed(2));
+                        var flowLitre = data.metering - Store.meterings[data.terminal - 1];
                         // Update bill
                         if (Store.bills[data.terminal - 1] > flowLitre) {
                             Store.bills[data.terminal - 1] -= flowLitre;
-                            // Billing.update({
-                            //     terminal: data.terminal,
-                            //     units: Store.bills[data.terminal - 1]
-                            // });
-                            client.emit(Events.WMS_CURRENT_BILLS, Store.bills);
+                            Store.meterings[data.terminal - 1] = data.metering;
                         } else {
                             Store.bills[data.terminal - 1] = 0;
-                            client.emit(Events.WMS_CURRENT_BILLS, Store.bills);
                         }
-                        if (data.terminal === 1) {
-                            Store.terminalUsages[0].push(Store.meterings[data.terminal - 1]);
-                            var usages = Store.terminalUsages[0];
-                            usages.reverse();
-                            client.emit(Events.WMS_TERMINAL_USAGE, usages);
-                        }
+                        client.emit(Events.WMS_CURRENT_BILLS, Store.bills);
                     }
                     Logger.info(
                         `[TERMINAL_DATA_UP] Terminal ${data.terminal}, sensor ${data.sensor} was updated with ${data.value}LPS`
@@ -119,7 +115,6 @@ class WMSSocket extends EventEmitter {
             }
 
             this._clients.push(client);
-            client.emit(Events.WMS_TERMINALS, this._tanks);
             Logger.info(`${this._clients.length} connection(s) opened!`);
 
             client.on('disconnect', () => {

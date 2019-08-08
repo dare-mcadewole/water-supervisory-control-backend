@@ -11,12 +11,18 @@ export default class TerminalController {
      * @param {*} next 
      */
     static async updateTerminal (Socket, { params: { terminal_id }, body: {
-        sensor, value
+        sensor, value, metering
     }}, reply, next) {
+        if (![1, 2].includes(parseInt(sensor))) {
+            reply.send({
+                msg: 'INVALID_SENSOR'
+            });
+        }
         var terminalData = {
             terminal: parseInt(terminal_id),
             sensor: parseInt(sensor),
-            value: parseInt(value)
+            value: parseInt(value),
+            metering: metering || 0
         };
         try {
             await Terminal.addData(terminalData);
