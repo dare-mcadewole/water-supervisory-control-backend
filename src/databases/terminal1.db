@@ -66,12 +66,14 @@
 {"sensor":1,"value":42,"createdDate":{"$$date":1563878883185},"_id":"72XQ2Vd8Nb2j7jlI"}
 {"sensor":1,"value":83,"createdDate":{"$$date":1563820736279},"_id":"765veCKbbOM1365F"}
 {"sensor":1,"value":11,"createdDate":{"$$date":1563879473415},"_id":"76vhHkgS5fyVXcF1"}
+{"sensor":2,"value":56,"createdDate":{"$$date":1565792020558},"_id":"7Bn96geZFD9dFqBX"}
 {"sensor":2,"value":44,"createdDate":{"$$date":1564769088782},"_id":"7DwTy5vdD9bqhSVJ"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563878784492},"_id":"7KkWRUWidesEGZY1"}
 {"sensor":1,"value":133,"createdDate":{"$$date":1563878872134},"_id":"7O55QDC6GxPoQfVQ"}
 {"sensor":2,"value":44,"createdDate":{"$$date":1564769091759},"_id":"7Onv6pXi0t68pWzJ"}
 {"sensor":2,"value":45,"createdDate":{"$$date":1564768587240},"_id":"7SnZ1EeBpBkOmhqD"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563877831144},"_id":"7iHQKuKF27sczq2e"}
+{"sensor":2,"value":56,"createdDate":{"$$date":1565792014100},"_id":"7jevvspnndPUfaDw"}
 {"sensor":2,"value":47,"createdDate":{"$$date":1565293969175},"_id":"7oPRgIdp5xiUCeN5"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563878488776},"_id":"7qMOgAb1PshmSMma"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563877103908},"_id":"7y8pHksRrUCj6eIL"}
@@ -84,6 +86,7 @@
 {"sensor":2,"value":38,"createdDate":{"$$date":1564769958601},"_id":"8awy1mnoiJhdA4rC"}
 {"sensor":2,"value":53,"createdDate":{"$$date":1565270008569},"_id":"8jSJ2XLuK8BwAKCs"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563876851100},"_id":"8n430uGOToP8EFE2"}
+{"sensor":2,"value":57.4,"createdDate":{"$$date":1565791879206},"_id":"8okZkXU6Kp23B4P7"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563878157398},"_id":"8qHyBvUwZGpUgBmH"}
 {"sensor":2,"value":45,"createdDate":{"$$date":1564768641325},"_id":"8rbzohhqgw6o3KRv"}
 {"sensor":1,"value":98,"createdDate":{"$$date":1563878944931},"_id":"8u49CYzwdanhZoUh"}
@@ -110,6 +113,7 @@
 {"sensor":2,"value":53,"createdDate":{"$$date":1565270009409},"_id":"AqO0adkezoQoymPF"}
 {"sensor":2,"value":45,"createdDate":{"$$date":1564768608435},"_id":"B6ud6qogqxHVIJvN"}
 {"sensor":1,"value":4,"createdDate":{"$$date":1563879843269},"_id":"B9o58I7dyic4lJfI"}
+{"sensor":2,"value":58,"createdDate":{"$$date":1565791914915},"_id":"BEd7i40NTMheGiW8"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563878220266},"_id":"BPHAqJUuHYLBKAhB"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563877145908},"_id":"BRJGpJ0ACz2RC1AT"}
 {"sensor":2,"value":53,"createdDate":{"$$date":1565269978256},"_id":"BSLrqNsR3D4GZmbL"}
@@ -139,6 +143,7 @@
 {"sensor":2,"value":53,"createdDate":{"$$date":1565269984509},"_id":"E28FdZc4e3TtqLtH"}
 {"sensor":2,"value":45,"createdDate":{"$$date":1564768650337},"_id":"E64MhlETIa1jOPhw"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563878584046},"_id":"EBSnbjzrN9A2JJaI"}
+{"sensor":2,"value":57,"createdDate":{"$$date":1565294322487},"_id":"EMb3XmSeUyZTggzD"}
 {"sensor":2,"value":44,"createdDate":{"$$date":1564769110203},"_id":"EOxaZ1DLuM7E0wBa"}
 {"sensor":2,"value":47,"createdDate":{"$$date":1565293908615},"_id":"ESXm1ViWkOgOwJUB"}
 {"sensor":2,"value":38,"createdDate":{"$$date":1564769957003},"_id":"EnEcNnZ3C4kQOUUC"}
@@ -174,6 +179,7 @@
 {"sensor":2,"value":38,"createdDate":{"$$date":1564769945423},"_id":"IatsT5yG8BmuXR8l"}
 {"sensor":1,"value":43,"createdDate":{"$$date":1563879104778},"_id":"IfG5LeTOIwzqSRsO"}
 {"sensor":1,"value":53,"createdDate":{"$$date":1564768249468},"_id":"IgNli8j0srxnhold"}
+{"sensor":2,"value":58,"createdDate":{"$$date":1565791952456},"_id":"J0sA5nfVDPQ6pKTu"}
 {"sensor":1,"value":43,"createdDate":{"$$date":1564769473926},"_id":"JBUErxiXqaCnUEwW"}
 {"sensor":1,"value":55,"createdDate":{"$$date":1565294194353},"_id":"JC6NfGDvrawXYc66"}
 {"sensor":2,"value":45,"createdDate":{"$$date":1564768662008},"_id":"JNg5iaOCOzt9Uvnb"}
@@ -319,6 +325,7 @@
 {"sensor":1,"value":70,"createdDate":{"$$date":1563879009152},"_id":"YdCdMgh0lXbhmrEB"}
 {"sensor":2,"value":45,"createdDate":{"$$date":1564768570234},"_id":"YetJFPYKL8bD5zOj"}
 {"sensor":1,"value":8,"createdDate":{"$$date":1563879557774},"_id":"YgKoqCsttxPZLwZQ"}
+{"sensor":1,"value":59.4,"createdDate":{"$$date":1565791894432},"_id":"YgWfGmiKlnzdbG0b"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563878209926},"_id":"YwtK5jiCS8ihTAjQ"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563877659540},"_id":"Z1IvJ9hwA5OOBdvs"}
 {"sensor":2,"value":44,"createdDate":{"$$date":1564769087198},"_id":"ZBT5gelqjDJagPNI"}
@@ -328,8 +335,10 @@
 {"sensor":1,"value":49,"createdDate":{"$$date":1563878965927},"_id":"ZX3R15E3GAlL6Lfu"}
 {"sensor":2,"value":45,"createdDate":{"$$date":1564768637730},"_id":"ZdINjjOT6BtmKuBX"}
 {"sensor":1,"value":83,"createdDate":{"$$date":1563827805823},"_id":"ZoWf6YqYcKmjXh0D"}
+{"sensor":1,"value":58,"createdDate":{"$$date":1565791996388},"_id":"Zr5p6O24qEUGwAUl"}
 {"sensor":1,"value":37,"createdDate":{"$$date":1563879040888},"_id":"Zuo9LLbGIzowPoO3"}
 {"sensor":2,"value":45,"createdDate":{"$$date":1564768639127},"_id":"Zw3gtotQS1rjKEi1"}
+{"sensor":2,"value":56.2,"createdDate":{"$$date":1565792027645},"_id":"Zz1bbx1xtwn5pBPY"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563877114557},"_id":"a5iMfO6RetBybMNg"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563877460307},"_id":"a8pCDtC672f7g0Wj"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563877745754},"_id":"aEI1LPcvtvYVELLb"}
@@ -395,6 +404,7 @@
 {"sensor":1,"value":0,"createdDate":{"$$date":1563878082025},"_id":"hfYEMfdAY7khw1dJ"}
 {"sensor":1,"value":36,"createdDate":{"$$date":1563879061800},"_id":"hjxWAMTKcwmCqfGU"}
 {"sensor":2,"value":45,"createdDate":{"$$date":1564768640768},"_id":"hmLoVg3Z0Jyp1kz4"}
+{"sensor":2,"value":56.2,"createdDate":{"$$date":1565792034358},"_id":"i4YcbksodKel3uUB"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563878795185},"_id":"i8Xlr1iOQZOFIJia"}
 {"sensor":2,"value":45,"createdDate":{"$$date":1564768616441},"_id":"iGrV0N494iAgvpi4"}
 {"sensor":2,"value":53,"createdDate":{"$$date":1565269769361},"_id":"iYO0VCLuEnnYGzol"}
@@ -577,4 +587,4 @@
 {"sensor":1,"value":0,"createdDate":{"$$date":1563878850264},"_id":"zeI2kPZ7B1skYXSB"}
 {"sensor":2,"value":47,"createdDate":{"$$date":1565293993608},"_id":"zslzY4kWWE3jY2t1"}
 {"sensor":1,"value":0,"createdDate":{"$$date":1563878478310},"_id":"zyc6uY3KpPSuT0z0"}
-{"sensor":2,"value":57,"createdDate":{"$$date":1565294322487},"_id":"EMb3XmSeUyZTggzD"}
+{"sensor":2,"value":53.2,"createdDate":{"$$date":1565792042853},"_id":"0WIJDIAJXREIlG9A"}

@@ -21,7 +21,7 @@ export default class TerminalController {
         var terminalData = {
             terminal: parseInt(terminal_id),
             sensor: parseInt(sensor),
-            value: parseInt(value),
+            value: parseFloat(value),
             metering: metering || 0
         };
         try {

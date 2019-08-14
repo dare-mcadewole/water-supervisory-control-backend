@@ -34,8 +34,16 @@ Server.use(Restify.plugins.bodyParser());
 Logger.info('Setting up CORS middleware');
 const cors = CORSMiddleware({
     origins: ['*'],
-    allowHeaders: ['Authorization', 'Content-Type'],
-    exposeHeaders: ['Authorization', 'Content-Type']
+    allowHeaders: [
+        'Authorization',
+        'Content-Type',
+        'X-Requested-With'
+    ],
+    exposeHeaders: [
+        'Authorization',
+        'Content-Type',
+        'X-Requested-With'
+    ]
 });
 Server.pre(cors.preflight);
 Server.use(cors.actual);
