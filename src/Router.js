@@ -44,7 +44,7 @@ export default class Router {
         ServerInstance.get('/api', (req, reply, next) => {
             reply.send({
                 name: 'Water Supervisory Control API',
-                version: '2.2.0'
+                version: process.env.VERSION
             });
             return next();
         });

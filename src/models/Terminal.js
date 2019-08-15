@@ -7,19 +7,24 @@ class Terminal {
     
     addData ({ terminal, sensor, value }) {
         // const Datastore = require('nedb-multi')(process.env.NEDB_MULTI_PORT);
-        var idealTerminal = new Datastore({
-            filename: path.resolve(BASE_PATH, `terminal${terminal}.db`),
-            autoload: true
-        });
+        // var idealTerminal = new Datastore({
+        //     filename: path.resolve(BASE_PATH, `terminal${terminal}.db`),
+        //     autoload: true
+        // });
+        var { DB } = process;
         // idealTerminal.loadDatabase();
         return new Promise((resolve, reject) => {
-            idealTerminal.insert({
+            // idealTerminal.insert({
+            //     sensor, value,
+            //     createdDate: new Date()
+            // });
+            DB.collection(`terminal${terminal}`).insertOne({
                 sensor, value,
                 createdDate: new Date()
             }, (err, doc) => {
                 if (err) reject(err);
                 resolve(doc);
-            });
+            })
         });
     }
 
@@ -31,7 +36,7 @@ class Terminal {
         });
         // db.loadDatabase();
         return new Promise((resolve, reject) => {
-            db.update(
+            DB.collection(`terminal_states`).findOneAndUpdate(
                 { terminal }, {
                     $set: { state }
                 }, { upsert: true },

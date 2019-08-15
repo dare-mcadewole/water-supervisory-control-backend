@@ -18,6 +18,21 @@ import Restify from 'restify';
 import Logger from './src/Logger';
 import CORSMiddleware from 'restify-cors-middleware';
 
+const MongoClient = require('mongodb').MongoClient;
+const uri = process.env.MONGO_URI;
+const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+client.connect(err => {
+    if (err) {
+        console.log(err);
+        return
+    }
+    Logger.info('MongoDB is connected!');
+    process.DB = client.db('wsc');
+});
+
 var Server = Restify.createServer({
     name: process.env.SERVER_NAME
 });

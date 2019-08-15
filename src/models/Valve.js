@@ -10,12 +10,12 @@ class Valve {
      * @param {*} terminalId 
      */
     async getValveState (terminalId) {
-        var db = new Datastore({
-            filename: `${BASE_PATH}/terminal-states.db`,
-            autoload: true
-        });
+        // var db = new Datastore({
+        //     filename: `${BASE_PATH}/terminal-states.db`,
+        //     autoload: true
+        // });
         return new Promise((resolve, reject) => {
-            db.findOne({ terminal: terminalId }, (err, doc) => {
+            process.DB.collection('terminal_states').find({ terminal: terminalId }).limit(1).next((err, doc) => {
                 if (err) reject(err);
                 resolve(doc.state);
             });
