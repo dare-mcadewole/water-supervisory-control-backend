@@ -8,16 +8,45 @@
  * Description:
  *       Restify Server API entry point
  */
-import sleep from 'thread-sleep';
 // Import Environment Variables
-Logger.info('Loading WMS server configurations ... ');
-// sleep(500);
-require('dotenv').config();
-
-import Restify from 'restify';
 import Logger from './src/Logger';
-import CORSMiddleware from 'restify-cors-middleware';
+Logger.info('Loading WMS server configurations ... ');
+require('dotenv').config();
+import Express from 'express';
+import Http from 'http';
+import BodyParser from 'body-parser';
+import CORS from 'cors';
+import Multer from 'multer';
 
+var App = Express();
+Logger.info('WMS Server is booting up ... ');
+var Server = Http.createServer(App);
+// sleep(700);
+
+Logger.info('Registering BodyParser and Multer plugin ... ');
+App.use(Express.json());
+App.use(Express.urlencoded({
+    extended: true
+}));
+
+Logger.info('Setting up CORS middleware ... ');
+const corsOptions = {
+    origin: '*',
+    methods: 'GET,HEAD,POST,PUT',
+    allowedHeaders: [
+        // 'Authorization',
+        'Content-Type',
+        'X-Requested-With'
+    ],
+    exposedHeaders: [
+        // 'Authorization',
+        'Content-Type',
+        'X-Requested-With'
+    ]
+};
+App.use(CORS(corsOptions));
+
+// Mongo DB connection
 const MongoClient = require('mongodb').MongoClient;
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri, {
@@ -25,53 +54,24 @@ const client = new MongoClient(uri, {
     useUnifiedTopology: true
 });
 client.connect(err => {
+    Logger.info('Connecting to MongoDb server ... ');
     if (err) {
-        console.log(err);
-        return
+        Logger.info(err);
+        return;
     }
     Logger.info('MongoDB is connected!');
     process.DB = client.db('wsc');
 });
 
-var Server = Restify.createServer({
-    name: process.env.SERVER_NAME
-});
-Logger.info('WMS Server is booting up ... ');
-// sleep(700);
-
-Logger.info('Registering QueryParser plugin ... ');
-Server.use(Restify.plugins.queryParser());
-Server.use(Restify.plugins.acceptParser(Server.acceptable));
-Server.use(Restify.plugins.fullResponse());
-Server.use(Restify.plugins.bodyParser());
-// sleep(500);
-
-Logger.info('Setting up CORS middleware');
-const cors = CORSMiddleware({
-    origins: ['*'],
-    allowHeaders: [
-        'Authorization',
-        'Content-Type',
-        'X-Requested-With'
-    ],
-    exposeHeaders: [
-        'Authorization',
-        'Content-Type',
-        'X-Requested-With'
-    ]
-});
-Server.pre(cors.preflight);
-Server.use(cors.actual);
-// sleep(500);
-
 // Initialize routes
-require('./src/Router').default.initRoutes(Server);
+require('./src/Router').default.initRoutes(App, Server);
 
-Server.listen(
+var serverInstance = Server.listen(
     process.env.PORT,
     process.env.HOST,
     () => {
-        // sleep(500);
-        Logger.info(`Say 'Hello' to WMS Server @ ${Server.url}`);
+        var address = serverInstance.address().address;
+        var port = serverInstance.address().port;
+        Logger.info(`Say 'Hello' to WMS Server @ http://${address}:${port}`);
     }
 );

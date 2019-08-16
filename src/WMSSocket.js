@@ -11,7 +11,6 @@
 import SocketIO from 'socket.io';
 import EventEmitter from 'eventemitter3';
 import Logger from './Logger';
-import sleep from 'thread-sleep';
 import Events from './Events';
 import Store from './Store';
 import Billing from './models/Billing';
@@ -26,9 +25,9 @@ class WMSSocket extends EventEmitter {
     
     /**
      * 
-     * @param {*} restifyServer 
+     * @param {*} server 
      */
-    initialize (restifyServer) {
+    initialize (server) {
         this._flowGap = 3;
         this._clients = [];
         this._tanks = [
@@ -36,8 +35,7 @@ class WMSSocket extends EventEmitter {
         ];
 
         Logger.info('Initializing WMS Socket ...');
-        var IO = SocketIO.listen(restifyServer.server);
-        sleep(1000);
+        var IO = SocketIO.listen(server);
 
         Logger.info('Setting up Socket Authentication Middleware ... ');
         IO.use((socket, next) => {
@@ -47,7 +45,6 @@ class WMSSocket extends EventEmitter {
             }
             return next(new Error('WMS_SOCKET_AUTHENTICATION_ERROR'));
         });
-        sleep(1000);
 
         IO.of(WMS_NAMESPACE).on('connection', (client) => {
             if (!this._clients.includes(client)) {

@@ -36,46 +36,46 @@ export default class Router {
      *
      * @param {*} ServerInstance
      */
-    static initRoutes (ServerInstance) {
+    static initRoutes (App, ServerInstance) {
         Logger.info('Initializing WMS Routes ... ');
         // Initialize and setup WMSSocket
         WMSSocket.initialize(ServerInstance);
 
-        ServerInstance.get('/api', (req, reply, next) => {
+        App.get('/api', (req, reply, next) => {
             reply.send({
                 name: 'Water Supervisory Control API',
-                version: process.env.VERSION
+                version: '2.5'
             });
             return next();
         });
 
-        ServerInstance.get(
+        App.get(
             '/api/valve/:terminal_id',
             (req, reply, next) => idValidation(req, reply, next, 'terminal_id', [1, 2, 3, 4]),
             ValveController.getValveState
         );
 
-        ServerInstance.post(
+        App.post(
             '/api/terminal/:terminal_id',
             (req, reply, next) => idValidation(req, reply, next, 'terminal_id', [1, 2, 3, 4]),
             (req, reply, next) => TerminalController.updateTerminal(WMSSocket, req, reply, next)
         );
 
         // /api/terminal/state/:terminal_id
-        ServerInstance.post(
+        App.post(
             '/api/terminal/state/:terminal_id',
             (req, reply, next) => idValidation(req, reply, next, 'terminal_id', [1, 2, 3, 4]),
             (req, reply, next) => TerminalController.updateTerminalState(WMSSocket, req, reply, next)
         );
 
         // /api/tank/init
-        ServerInstance.post(
+        App.post(
             '/api/tank/init',
             TankController.initialize
         );
 
         // /api/tank/pump?
-        ServerInstance.post(
+        App.post(
             '/api/tank/pump',
             (req, reply, next) => {
                 TankController.setPumpState(WMSSocket, req, reply, next);
@@ -83,14 +83,14 @@ export default class Router {
         );
 
         // /api/tank/level
-        ServerInstance.post(
+        App.post(
             '/api/tank/level',
             (req, reply, next) => {
                 TankController.setWaterLevel(WMSSocket, req, reply, next);
             }
         );
 
-        ServerInstance.post(
+        App.post(
             '/api/terminal/billing/:terminal_id',
             (req, reply, next) => idValidation(req, reply, next, 'terminal_id', [1, 2, 3, 4]),
             (req, reply, next) => {
