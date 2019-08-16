@@ -35,16 +35,19 @@ class WMSSocket extends EventEmitter {
         ];
 
         Logger.info('Initializing WMS Socket ...');
-        var IO = SocketIO.listen(server);
+        var IO = SocketIO.listen(server, {
+            origins: '*:*'
+        });
+        // IO.set('transports', [ 'websockets' ]);
 
         Logger.info('Setting up Socket Authentication Middleware ... ');
-        IO.use((socket, next) => {
-            let token = socket.handshake.query.token;
-            if (token === process.env.SOCKET_KEY) {
-                return next();
-            }
-            return next(new Error('WMS_SOCKET_AUTHENTICATION_ERROR'));
-        });
+        // IO.use((socket, next) => {
+        //     let token = socket.handshake.query.token;
+        //     if (token === process.env.SOCKET_KEY) {
+        //         return next();
+        //     }
+        //     return next(new Error('WMS_SOCKET_AUTHENTICATION_ERROR'));
+        // });
 
         IO.of(WMS_NAMESPACE).on('connection', (client) => {
             if (!this._clients.includes(client)) {

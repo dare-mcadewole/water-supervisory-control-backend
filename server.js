@@ -37,11 +37,6 @@ const corsOptions = {
         // 'Authorization',
         'Content-Type',
         'X-Requested-With'
-    ],
-    exposedHeaders: [
-        // 'Authorization',
-        'Content-Type',
-        'X-Requested-With'
     ]
 };
 App.use(CORS(corsOptions));
